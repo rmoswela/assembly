@@ -24,8 +24,8 @@ int 80h
 
 ; Read and store User input
 mov eax, 3				; system call number (sys_read)
-mov ebx, 2				; file descriptor (stdin) ???????
-mov ecx, num				; ????
+mov ebx, 0 				; file descriptor (stdin)
+mov ecx, num				; buffer of 5 bytes
 mov edx, 5				; 5 bytes (numeric 1 for sign) of that information
 int 80h
 
