@@ -1,17 +1,17 @@
 section .text
-	global ft_strlen
+	global _ft_strlen
 
-ft_strlen:
-	xor rcx, rcx		; clear a register to set it to zero
-	not rcx			; reversing all the bits hence rcx is equal to the highest value possible
-	xor al, al		; initialize al register to null or zero so to compare with end edi register
+_ft_strlen:
+	xor rcx, rcx	; clear a register to set it to zero
+	not rcx			; reverse all bits hence rcx is equal to highest value possible
+	xor al, al		; initialize al reg to zero so to compare with end edi reg
 	jmp loop
 
 loop:
-	cld			; clear direction flag hence, increment pointer to data at every iteration
+	cld				; clear direction flag so to increment pointer to data at every iteration
 	repne scasb		; repeat if not equal and scan or search for a string byte
-				; compare the value pointed by edi with value of accumulator that is al register(null)
-	not rcx			; reversing all the bits of negative num is absolute value minus 1
+					; compare value pointed by edi with value of al register(null)
+	not rcx			; reverse all the bits of negative num is absolute value minus 1
 	dec rcx			; not counting the null terminating character
-	mov rax, rcx		; move the value in rcx (counter register) to accumulator (input/output reg)
+	mov rax, rcx	; move value in rcx (counter reg) to accumulator (I/O reg)
 	ret

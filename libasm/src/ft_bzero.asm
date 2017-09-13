@@ -1,14 +1,14 @@
 section .text
-	global ft_bzero
+	global _ft_bzero
 
-ft_bzero:
-	jmp loop		; jump to label loop
+_ft_bzero:
+	jmp loop			; jump to label loop
 loop:
-	cmp rsi, 0		; compare the index at rsi with 0
-	je return		; jump to label ret if equal
-	mov byte[rdi], 0	; dereference and replace the value at rdi by 0
-	inc rdi			; increment the destination index
-	dec rsi			; decrease the source index
-	jmp loop		; jump to label loop to continue looping
+	cmp rsi, 0			; compare arg2 with 0
+	je return			; jump to label ret if equal
+	mov byte[rdi], 0	; dereference replace value at the index of rdi(arg2) by 0
+	inc rdi				; increment index of argument 1
+	dec rsi				; decrease the length or argument 2
+	jmp loop			; jump to label loop to continue looping
 return:
 	ret
