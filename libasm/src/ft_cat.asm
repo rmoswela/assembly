@@ -1,55 +1,47 @@
 section .data
     SYS_READ    equ 0x2000003
     SYS_WRITE   equ 0x2000004
-    newline     db  0x0a
+    BUFF_S      equ 1
+    EOF         equ (0)
 
 section .bss
-    tBuffer resb    1025
+    tBuffer resb    2
 
 section .text
     global  _ft_cat
     extern  _printf
 
 _ft_cat:
-    mov rcx, 1              ;; rdi has the file descriptor
-    lea rsi, [rel tBuffer]  ;; mov to rsi first address of reserved buffer bytes
-    mov byte[rsi + 1024], 0 ;; null terminate the text buffer
-    ;mov rdx, 10           ;; mov the length of the buffer | the bytes/read param
-    mov rax, 1
+    mov rcx, 1
+    lea rsi, [rel tBuffer]
+    mov byte[rsi + BUFF_S], 0
+    mov rax, 2
 
 _loop:
-    cmp rax, 0              ;; compare rax, to stop when EOF is read and hence 0 isreturned
-    je  _exit               ;; exit if read return zero
-    push    rdi             ;; safekeep file descriptor
-    call    _read           ;; call read
+    cmp rax, EOF
+    je  _exit
+    push    rdi
+    call    _read
     push    rax
     call    _write
     pop     rax
-    pop     rdi             ;; retrieve file descriptor
-    jmp     _loop           ;; repeat reading instructions
+    pop     rdi
+    jmp     _loop
 
 _read:
-	mov rdx, 10
-    mov rax, SYS_READ   ;; mov read sys_code to rax
+    mov rdx, BUFF_S
+    lea rsi, [rel tBuffer]
+    mov rax, SYS_READ
     syscall
     ret
 
 _write:
-    mov rdi, 1              ;; stdout to rdi
-    lea rsi, [rel tBuffer]  ;; the buffer to print
-    mov rdx, 10           ;; buffer length
-    mov rax, SYS_WRITE      ;; mov write sys_code to rax
-    syscall                 ;; call write
-    ret
-
-_newline:
-    mov rdi, 1              ;; stdout to rdi
-    lea rsi, [rel newline]  ;; the buffer to print
-    mov rdx, 1              ;; buffer length
-    mov rax, SYS_WRITE      ;; mov write sys_code to rax
-    syscall                 ;; call write
+    mov rdi, 1
+    lea rsi, [rel tBuffer]
+    mov rdx, BUFF_S
+    mov rax, SYS_WRITE
+    syscall
     ret
 
 _exit:
-    call    _newline
     ret

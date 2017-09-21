@@ -145,7 +145,7 @@ int main(void)
 
 	ret = 0;
 	ch = 32;
-	fd = open("main_tests.c", O_RDONLY);
+	fd = open("author", O_RDONLY);
 	ptr = (char *)malloc(sizeof(char) * 5);
 	fptr = (char *)malloc(sizeof(char) * 5);
 	printf("\n\033[92m********************************************************************************\033[0m\n");

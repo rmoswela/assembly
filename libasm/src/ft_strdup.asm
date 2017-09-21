@@ -18,6 +18,6 @@ _ft_strdup:
 	push	rdx					; push length value in rdx
 	call	_ft_memcpy			; copy string using length rdx
 	pop		rdx					; get the top most value on the stack
-	mov		byte[rax + rdx], 0	; add zero to address at rax+rdx
+	mov		byte[rax + rdx], 0	; move zero to the byte address at rax+rdx
 	ret
 
